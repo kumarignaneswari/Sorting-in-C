@@ -1,0 +1,46 @@
+#include<stdio.h>
+void merge(int a[],int start,int mid,int end,int n)
+{
+	int i=start;//first part start
+	int j=mid+1;//second part start
+	int b[end-start+1];//another array to store
+	int k=0;//b array intiliasation
+	while(i<=mid && j<=end)
+	{
+		if(a[i]<a[j])
+		{
+			b[k++]=a[i++];
+		}
+		else
+		{
+			b[k++]=a[j++];
+		}
+	}
+	while(i<=mid) b[k++]=a[i++];//if any remaining elements left storing them first part
+	while(j<=end) b[k++]=a[j++];//if any remaining elements left storing them second part
+	k=0;
+	for(i=start;i<=end;i++)
+	{
+		a[i]=b[k++];
+	}
+}
+void mergesort(int a[],int n,int start,int end)
+{
+	if(start>=end) return;
+	int mid=(start+end)/2;
+	mergesort(a,n,start,mid);
+	mergesort(a,n,mid+1,end);
+	merge(a,start,mid,end,n);// when backtracking merging both arrays
+}
+int main()
+{
+	int n;
+	scanf("%d",&n);
+	int a[n],i;
+	for(i=0;i<n;i++) scanf("%d",&a[i]);
+	mergesort(a,n,0,n-1);
+	for(i=0;i<n;i++)
+	{
+	printf("%d ",a[i]);
+}
+}
